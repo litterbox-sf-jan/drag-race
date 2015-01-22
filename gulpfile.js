@@ -8,7 +8,7 @@ var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-var bundler = watchify(browserify('./js/main.js', watchify.args));
+var bundler = watchify(browserify('./js/main.js', { debug: true, cache: {}, packageCache: {}, fullPaths: true }));
 // add any other browserify options or transforms here
 // bundler.transform('brfs');
 
@@ -23,7 +23,7 @@ function bundle() {
     // optional, remove if you dont want sourcemaps
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-    .pipe(sourcemaps.write('./')) // writes .map file
+    .pipe(sourcemaps.write()) 
     //
     .pipe(gulp.dest('./js'));
 }
