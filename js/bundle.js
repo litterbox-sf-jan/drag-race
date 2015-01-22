@@ -14,6 +14,8 @@
     this.$el = document.getElementById('dragster');
     // set the starting position of the dragster
     this.$el.style.left = "0px";
+    // this keeps track of whether it's running
+    this.isRunning = false;
   },
   Game              = function() {
     // this class manages game state
@@ -35,18 +37,30 @@
 
   Game.prototype.attachListeners = function() {
     var self = this;
-    // listen for user input, specifically
-    // for the user pressing the right arrow key
+    // listen for user to press keys
     window.addEventListener('keyup', function(event) {
       if (event.keyCode === 39) {
+        // if the user presses the right arrow key
+        // advance the dragster
         self.dragster.advance();
+      } else if (event.keyCode === 13) {
+        // if the user presses the enter key
+        // start the dragster
+        self.dragster.start();
       }
     });
   };
 
+  Dragster.prototype.start = function() {
+    this.isRunning = true;
+  };
+
   Dragster.prototype.advance = function() {
-    // this should move the car across the screen 1px at a time
-    this.$el.style.left = parseInt(this.$el.style.left, 10) + 1 + "px";
+    // if the engine is running
+    if (this.isRunning) { 
+      // this should move the car across the screen 1px at a time
+      this.$el.style.left = parseInt(this.$el.style.left, 10) + 1 + "px";
+    }
   };
 
   var g = new Game();
