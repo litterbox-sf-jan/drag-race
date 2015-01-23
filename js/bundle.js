@@ -26,6 +26,8 @@
     // initialize the player dragster
     this.dragster = new Dragster();
 
+    setInterval(this.loop.bind(this), 1);
+
     this.attachListeners();
   };
 
@@ -33,6 +35,34 @@
     // append the css on class to the pre stage lights
     // so that they show up as yellow
     this.$preStageLights.className += " on";
+  };
+
+  ChristmasTree.prototype.stage = function() {
+  };
+
+  ChristmasTree.prototype.falseStart = function() {
+  };
+
+  Game.prototype.loop = function() {
+    // check the game states and react accordingly
+    // 1. pre-staged
+    // 2. staged
+    if (this.dragster.isStaged() && !this.staged) {
+      this.stage();
+      if (this.dragster.crossedStage()) {
+        this.tree.falseStart();
+      }
+    }
+    //  a. dragster false start
+    // 3. started
+    //  a. dragster crossed finish line
+    // 4. finished 
+  };
+
+  Game.prototype.stage = function() {
+    console.log('staged!');
+    this.staged  = true;
+    this.tree.stage();
   };
 
   Game.prototype.attachListeners = function() {
@@ -61,6 +91,14 @@
       // this should move the car across the screen 1px at a time
       this.$el.style.left = parseInt(this.$el.style.left, 10) + 1 + "px";
     }
+  };
+
+  Dragster.prototype.isStaged = function() {
+    return parseInt(this.$el.style.left,10) >= this.$el.offsetWidth + 10;
+  };
+
+  Dragster.prototype.crossedStage = function() {
+     
   };
 
   var g = new Game();
