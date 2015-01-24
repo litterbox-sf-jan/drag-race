@@ -37,11 +37,16 @@
   background: yellow;
 }
 
-#start-lights div {
+#start-lights div, #false-start-lights div {
   width: 20px;
   height: 20px;
   border-radius: 10px;
 }
+
+#false-start-lights.on div {
+  background: red;
+}
+
 
 /******* RACETRACK ******/
 #racetrack {

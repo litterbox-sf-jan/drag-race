@@ -5,6 +5,8 @@
     this.$preStageLights = document.getElementById('pre-stage');
 
     this.$stageLights = document.getElementById('stage');
+
+    this.$falseStartLights = document.getElementById('false-start-lights');
     // reset the christmas tree every time it's initialized
     this.reset();
   },
@@ -48,19 +50,21 @@
   };
 
   ChristmasTree.prototype.falseStart = function() {
+    this.turnOn(this.$falseStartLights);
   };
 
   Game.prototype.loop = function() {
     // check the game states and react accordingly
+    // this is basically a state machine
     // 1. pre-staged
     // 2. staged
     if (this.dragster.isStaged() && !this.staged) {
       this.stage();
     }
 
-    //if (this.staged && !this.started && this.dragster.crossedStage()) {
-    //  this.tree.falseStart();
-    //}
+    if (this.staged && !this.started && this.dragster.crossedStage() && !this.falseStarted) {
+      this.falseStart();
+    }
     //  a. dragster false start
     // 3. started
     //  a. dragster crossed finish line
@@ -70,6 +74,11 @@
   Game.prototype.stage = function() {
     this.staged  = true;
     this.tree.stage();
+  };
+
+  Game.prototype.falseStart = function() {
+    this.falseStarted = true;
+    this.tree.falseStart();
   };
 
   Game.prototype.attachListeners = function() {
@@ -105,7 +114,7 @@
   };
 
   Dragster.prototype.crossedStage = function() {
-     
+    return parseInt(this.$el.style.left,10) > this.$el.offsetWidth + 20;
   };
 
   var g = new Game();
