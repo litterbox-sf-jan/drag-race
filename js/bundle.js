@@ -3,6 +3,8 @@
     // this class manages the xmas tree
     // get a reference to the pre stage lights html element
     this.$preStageLights = document.getElementById('pre-stage');
+
+    this.$stageLights = document.getElementById('stage');
     // reset the christmas tree every time it's initialized
     this.reset();
   },
@@ -38,6 +40,7 @@
   };
 
   ChristmasTree.prototype.stage = function() {
+    this.$stageLights.className += " on";
   };
 
   ChristmasTree.prototype.falseStart = function() {
@@ -49,10 +52,11 @@
     // 2. staged
     if (this.dragster.isStaged() && !this.staged) {
       this.stage();
-      if (this.dragster.crossedStage()) {
-        this.tree.falseStart();
-      }
     }
+
+    //if (this.staged && !this.started && this.dragster.crossedStage()) {
+    //  this.tree.falseStart();
+    //}
     //  a. dragster false start
     // 3. started
     //  a. dragster crossed finish line
@@ -60,7 +64,6 @@
   };
 
   Game.prototype.stage = function() {
-    console.log('staged!');
     this.staged  = true;
     this.tree.stage();
   };

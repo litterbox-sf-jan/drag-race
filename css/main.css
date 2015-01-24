@@ -33,7 +33,7 @@
   border-radius: 5px;
 }
 
-#pre-stage.on div {
+#pre-stage.on div, #stage.on div {
   background: yellow;
 }
 
