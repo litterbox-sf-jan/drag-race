@@ -37,7 +37,7 @@
   background: yellow;
 }
 
-.start.lights.on:nth-of-type(6) div {
+.start.on.lights:nth-of-type(6) div {
   background: green;
 }
 

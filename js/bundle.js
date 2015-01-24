@@ -62,6 +62,7 @@
 
   ChristmasTree.prototype.falseStart = function() {
     this.turnOn(this.$falseStartLights);
+    clearInterval(this.lightSwitchTimer);
   };
 
   Game.prototype.loop = function() {
