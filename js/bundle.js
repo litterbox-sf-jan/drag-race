@@ -7,6 +7,8 @@
     this.$stageLights = document.getElementById('stage');
 
     this.$falseStartLights = document.getElementById('false-start-lights');
+
+    this.currentStartingLights = 0;
     // reset the christmas tree every time it's initialized
     this.reset();
   },
@@ -47,6 +49,15 @@
 
   ChristmasTree.prototype.stage = function() {
     this.turnOn(this.$stageLights);
+    this.lightSwitchTimer = setInterval(this.cycleStartingLights.bind(this), 500);
+  };
+
+  ChristmasTree.prototype.cycleStartingLights = function() {
+    document.querySelectorAll('.start.lights')[this.currentStartingLights].className += ' on';
+    if (this.currentStartingLights === 3) {
+      clearInterval(this.lightSwitchTimer);
+    }
+    this.currentStartingLights++;
   };
 
   ChristmasTree.prototype.falseStart = function() {
@@ -62,10 +73,10 @@
       this.stage();
     }
 
+    //  a. dragster false start
     if (this.staged && !this.started && this.dragster.crossedStage() && !this.falseStarted) {
       this.falseStart();
     }
-    //  a. dragster false start
     // 3. started
     //  a. dragster crossed finish line
     // 4. finished 
