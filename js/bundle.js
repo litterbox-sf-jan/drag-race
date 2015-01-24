@@ -33,14 +33,18 @@
     this.attachListeners();
   };
 
+  ChristmasTree.prototype.turnOn = function($which) {
+    $which.className += " on";
+  },
+
   ChristmasTree.prototype.reset = function() {
     // append the css on class to the pre stage lights
     // so that they show up as yellow
-    this.$preStageLights.className += " on";
+    this.turnOn(this.$preStageLights);
   };
 
   ChristmasTree.prototype.stage = function() {
-    this.$stageLights.className += " on";
+    this.turnOn(this.$stageLights);
   };
 
   ChristmasTree.prototype.falseStart = function() {
@@ -92,7 +96,7 @@
     // if the engine is running
     if (this.isRunning) { 
       // this should move the car across the screen 1px at a time
-      this.$el.style.left = parseInt(this.$el.style.left, 10) + 1 + "px";
+      this.$el.style.left = parseInt(this.$el.style.left, 10) + 10 + "px";
     }
   };
 
