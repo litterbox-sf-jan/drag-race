@@ -49,19 +49,23 @@
 
   ChristmasTree.prototype.stage = function() {
     this.turnOn(this.$stageLights);
-    this.lightSwitchTimer = setInterval(this.cycleStartingLights.bind(this), 500);
+    this.lightSwitchTimer = setInterval(this.cycle.bind(this), 500);
   };
 
-  ChristmasTree.prototype.cycleStartingLights = function() {
+  ChristmasTree.prototype.cycle = function() {
     document.querySelectorAll('.start.lights')[this.currentStartingLights].className += ' on';
     if (this.currentStartingLights === 3) {
-      clearInterval(this.lightSwitchTimer);
+      this.stopCycle();
     }
     this.currentStartingLights++;
   };
 
   ChristmasTree.prototype.falseStart = function() {
     this.turnOn(this.$falseStartLights);
+    this.stopCycle();
+  };
+
+  ChristmasTree.prototype.stopCycle = function() {
     clearInterval(this.lightSwitchTimer);
   };
 
@@ -94,19 +98,18 @@
   };
 
   Game.prototype.attachListeners = function() {
-    var self = this;
     // listen for user to press keys
     window.addEventListener('keyup', function(event) {
       if (event.keyCode === 39) {
         // if the user presses the right arrow key
         // advance the dragster
-        self.dragster.advance();
+        this.dragster.advance();
       } else if (event.keyCode === 13) {
         // if the user presses the enter key
         // start the dragster
-        self.dragster.start();
+        this.dragster.start();
       }
-    });
+    }.bind(this));
   };
 
   Dragster.prototype.start = function() {
