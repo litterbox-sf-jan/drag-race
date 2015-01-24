@@ -1,6 +1,9 @@
 (function() {
-  var ChristmasTree = function() {
+  var ChristmasTree = function(game) {
     // this class manages the xmas tree
+    // we need to keep a reference to the game
+    // to communicate with it about where the lights are
+    this.game = game;
     // get a reference to the pre stage lights html element
     this.$preStageLights = document.getElementById('pre-stage');
 
@@ -26,7 +29,7 @@
   Game              = function() {
     // this class manages game state
     // initialize a christmas tree
-    this.tree = new ChristmasTree();
+    this.tree = new ChristmasTree(this);
     // initialize the race track
     this.track = new RaceTrack();
     // initialize the player dragster
@@ -56,6 +59,7 @@
     document.querySelectorAll('.start.lights')[this.currentStartingLights].className += ' on';
     if (this.currentStartingLights === 3) {
       this.stopCycle();
+      this.game.start();
     }
     this.currentStartingLights++;
   };
@@ -95,6 +99,10 @@
   Game.prototype.falseStart = function() {
     this.falseStarted = true;
     this.tree.falseStart();
+  };
+
+  Game.prototype.start = function() {
+    this.started = true;
   };
 
   Game.prototype.attachListeners = function() {
