@@ -14,25 +14,6 @@
     this.currentStartingLights = 0;
     // reset the christmas tree every time it's initialized
     this.reset();
-  },
-  Dragster          = function() {
-    // grab the car element
-    this.$el = document.getElementById('dragster');
-    // set the starting position of the dragster
-    this.$el.style.left = "0px";
-    // this keeps track of whether it's running
-    this.isRunning = false;
-  },
-  Game              = function() {
-    // this class manages game state
-    // initialize a christmas tree
-    this.tree = new ChristmasTree(this);
-    // initialize the player dragster
-    this.dragster = new Dragster();
-
-    setInterval(this.loop.bind(this), 1);
-
-    this.attachListeners();
   };
 
   ChristmasTree.prototype.turnOn = function($which) {
@@ -66,6 +47,51 @@
 
   ChristmasTree.prototype.stopCycle = function() {
     clearInterval(this.lightSwitchTimer);
+  };
+
+  var Dragster          = function() {
+    // grab the car element
+    this.$el = document.getElementById('dragster');
+    // set the starting position of the dragster
+    this.$el.style.left = "0px";
+    // this keeps track of whether it's running
+    this.isRunning = false;
+  };
+
+  Dragster.prototype.start = function() {
+    this.isRunning = true;
+  };
+
+  Dragster.prototype.advance = function() {
+    // if the engine is running
+    if (this.isRunning) { 
+      // this should move the car across the screen 1px at a time
+      this.$el.style.left = parseInt(this.$el.style.left, 10) + 10 + "px";
+    }
+  };
+
+  Dragster.prototype.isStaged = function() {
+    return parseInt(this.$el.style.left,10) >= this.$el.offsetWidth + 10;
+  };
+
+  Dragster.prototype.crossedStage = function() {
+    return parseInt(this.$el.style.left,10) > this.$el.offsetWidth + 20;
+  };
+
+  Dragster.prototype.crossedFinishLine = function() {
+    return parseInt(this.$el.style.left,10) > document.getElementById('finish').offsetLeft;
+  };
+
+  var Game              = function() {
+    // this class manages game state
+    // initialize a christmas tree
+    this.tree = new ChristmasTree(this);
+    // initialize the player dragster
+    this.dragster = new Dragster();
+
+    setInterval(this.loop.bind(this), 1);
+
+    this.attachListeners();
   };
 
   Game.prototype.loop = function() {
@@ -121,30 +147,6 @@
         this.dragster.start();
       }
     }.bind(this));
-  };
-
-  Dragster.prototype.start = function() {
-    this.isRunning = true;
-  };
-
-  Dragster.prototype.advance = function() {
-    // if the engine is running
-    if (this.isRunning) { 
-      // this should move the car across the screen 1px at a time
-      this.$el.style.left = parseInt(this.$el.style.left, 10) + 10 + "px";
-    }
-  };
-
-  Dragster.prototype.isStaged = function() {
-    return parseInt(this.$el.style.left,10) >= this.$el.offsetWidth + 10;
-  };
-
-  Dragster.prototype.crossedStage = function() {
-    return parseInt(this.$el.style.left,10) > this.$el.offsetWidth + 20;
-  };
-
-  Dragster.prototype.crossedFinishLine = function() {
-    return parseInt(this.$el.style.left,10) > document.getElementById('finish').offsetLeft;
   };
 
   new Game();
