@@ -32,7 +32,8 @@
   };
 
   ChristmasTree.prototype.cycle = function() {
-    document.querySelectorAll('.start.lights')[this.currentStartingLights].className += ' on';
+    this.turnOn(document.querySelectorAll('.start.lights')[this.currentStartingLights]);
+
     if (this.currentStartingLights === 3) {
       this.stopCycle();
       this.game.start();
