@@ -53,11 +53,46 @@
 
 
 /******* RACETRACK ******/
+#win {
+  visibility:hidden;
+  opacity:0;
+  height:0;
+  overflow:hidden;
+  text-align:center;
+  color:white;
+  font-size:2em;
+  vertical-align:middle;
+}
+
 #racetrack {
-  background: green;
+  background-color: green;
   width: 90%;
   height: 88px;
   border: 2px solid black;
+}
+
+#racetrack.game-over {
+  background-color: blue;
+  -webkit-transition: background-color 2s;
+  transition: background-color 2s;
+}
+
+#racetrack.game-over #strip {
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  visibility:hidden;
+  opacity:0;
+  overflow:hidden;
+  height:0;
+}
+
+#racetrack.game-over #win {
+  visibility:visible;
+  opacity:1;
+  height:100%;
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  padding-top:30px;
 }
 
 #strip {
