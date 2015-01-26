@@ -83,7 +83,7 @@
     }
     // 3. started
     //  a. dragster crossed finish line
-    if (this.started && this.dragster.crossedFinishLine()) {
+    if (this.started && !this.gameOver && this.dragster.crossedFinishLine()) {
       this.endGame();
     }
     // 4. finished 
@@ -104,6 +104,7 @@
   };
 
   Game.prototype.endGame = function() {
+    this.gameOver = true;
     document.getElementById('racetrack').className += " game-over";
   };
 
