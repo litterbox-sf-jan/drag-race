@@ -15,9 +15,6 @@
     // reset the christmas tree every time it's initialized
     this.reset();
   },
-  RaceTrack         = function() {
-    // this class manages the race track
-  },
   Dragster          = function() {
     // grab the car element
     this.$el = document.getElementById('dragster');
@@ -30,8 +27,6 @@
     // this class manages game state
     // initialize a christmas tree
     this.tree = new ChristmasTree(this);
-    // initialize the race track
-    this.track = new RaceTrack();
     // initialize the player dragster
     this.dragster = new Dragster();
 
@@ -88,6 +83,9 @@
     }
     // 3. started
     //  a. dragster crossed finish line
+    if (this.started && this.dragster.crossedFinishLine()) {
+      this.endGame();
+    }
     // 4. finished 
   };
 
@@ -103,6 +101,10 @@
 
   Game.prototype.start = function() {
     this.started = true;
+  };
+
+  Game.prototype.endGame = function() {
+    document.getElementById('racetrack').className += " game-over";
   };
 
   Game.prototype.attachListeners = function() {
@@ -140,5 +142,9 @@
     return parseInt(this.$el.style.left,10) > this.$el.offsetWidth + 20;
   };
 
-  var g = new Game();
+  Dragster.prototype.crossedFinishLine = function() {
+    return parseInt(this.$el.style.left,10) > document.getElementById('finish').offsetLeft;
+  };
+
+  new Game();
 })();
